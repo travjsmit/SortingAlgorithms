@@ -42,7 +42,7 @@ namespace SortingAlgorithms
             Student student2 = new Student("Rich", 3.0);
             Student student3 = new Student("Adam", 3.8);
 
-            Student[] students = { student1, student2 };
+            Student[] students = { student1, student2, student3 };
 
             switch (userSelection)
             {
@@ -62,6 +62,41 @@ namespace SortingAlgorithms
             }
 
             PrintArray(students);
+            int[] mergeArray = { 3, 2, 5, 6, 7, 4, 1, 0 };
+            MergeSort(mergeArray);
+        }
+
+        // Splits array up and eventually merges it together
+        // Calls itself recursively
+        public static void MergeSort(int[] arr)
+        {
+            if (arr.Length <= 1) return; // Example of early return
+
+            int mid = arr.Length / 2;
+            int[] leftSubArray = new int[mid];
+            int[] rightSubArray = new int[arr.Length - mid];
+
+            for (int i = 0; i < mid; i++)
+            {
+                leftSubArray[i] = arr[i];
+            }
+
+            for (int i = mid; i < arr.Length; i++)
+            {
+                rightSubArray[i - mid] = arr[i];
+            }
+
+            MergeSort(leftSubArray);
+            MergeSort(rightSubArray);
+        }
+
+        public static void PrintArray(int[] arr)
+        {
+            foreach (var item in arr)
+            {
+                Console.WriteLine(item + " ");
+            }
+            Console.WriteLine();
         }
 
         public static void PrintArray(Student[] arr)
@@ -73,33 +108,42 @@ namespace SortingAlgorithms
             Console.WriteLine();
         }
 
-        public static int BubbleSort(int[] arrToSort) //good if low on system memory 
+        public static void BubbleSort(int[] arrToSort) //good if low on system memory 
         {
-            int totalOuterIterations = 0;
             int temp;
             // Overall O(n^2) runtime
             // Big Omega - O(n^2)
 
             for (int i = 0; i < arrToSort.Length; i++) //how many times through unsorted elements O(n)
             {
-                ++totalOuterIterations;
-                int swaps = 0;
                 for (int j = 0; j < arrToSort.Length - 1 - i; j++) //O(n)
                 {
-                    //swap places if j is greater than j + 1
                     if (arrToSort[j] > arrToSort[j + 1]) //change to < to reverse array
                     {
-                        swaps++;
                         temp = arrToSort[j];
                         arrToSort[j] = arrToSort[j + 1];
                         arrToSort[j + 1] = temp;
                     }
                 }
-                if (swaps == 0) break;
             }
-            return totalOuterIterations;
         }
 
+        public static void BubbleSort(Student[] arrToSort)
+        {
+            Student temp;
+            for (int i = 0; i < arrToSort.Length; -1; i++) //how many times through unsorted array
+            {
+                for (int j = 0; j < arrToSort.Length - 1 - i; j++) //O(n)
+                {
+                    if (arrToSort[j].gpa > arrToSort[j + 1].gpa)
+                    {
+                        temp = arrToSort[j];
+                        arrToSort[j] = arrToSort[j + 1];
+                        arrToSort[j + 1] = temp;
+                    }
+                }
+            }
+        }
         public static void SelectionSort(int[] arrToSort)
         {
             // minIndex keeps track of smallest index in each iteration
@@ -131,7 +175,9 @@ namespace SortingAlgorithms
 
         public static void InsertionSort(int[] arr)
         {
-            for (int i = 1; i < arr.Length; i++)
+            // Overall worst case scenario: O(n^2)
+            // Best case scenario: O(n)
+            for (int i = 1; i < arr.Length; i++) // O(n)
             {
                 int temp = arr[i];  // store the current element - as it might be overwritten
                 int priorIndex = i - 1; // start comparing with the element before the current element
@@ -146,25 +192,6 @@ namespace SortingAlgorithms
 
                 // need to an assignment
                 arr[priorIndex + 1] = temp;
-            }
-        }
-
-        public static void BubbleSort(Student[] arrToSort)
-        {
-            Student temp;
-            for (int i = 0; i < arrToSort.Length - 1; i++) //how many times through unsorted elements O(n)
-            {
-                int swaps = 0;
-                for (int j = 0; j < arrToSort.Length - 1 - i; j++)
-                {
-                    // we need to swap
-                    if (arrToSort[j].gpa < arrToSort[j + 1].gpa)
-                    {
-                        temp = arrToSort[j];
-                        arrToSort[j] = arrToSort[j + 1];
-                        arrToSort[j + 1] = temp;
-                    }
-                }
             }
         }
     }
