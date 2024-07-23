@@ -63,11 +63,66 @@ namespace SortingAlgorithms
             //}
 
             //PrintArray(students);
+
             int[] mergeArray = { 3, 2, 5, 6, 7, 4, 1, 0 };
-            MergeSort(mergeArray);
+            //MergeSort(mergeArray);
+            //Console.WriteLine();
+            QuickSort(mergeArray);
         }
 
-        // Splits array up and eventually merges it together
+        public static void QuickSort(int[] arr)
+        {
+            if (arr == null) return;
+            if (arr.Length == 0) return;
+            QuickSortHelper(arr, 0, arr.Length - 1);
+        }
+
+        /// <summary>
+        /// Utilizes a quick sort algorithm to sort the passed array
+        /// </summary>
+        /// <param name="arr"> the array which shoulld be sorted </param>
+        /// <param name="low"> the smaller index of the (sub)array </param>
+        /// <param name="high"> the larger index of the (sub)array </param>
+        public static void QuickSortHelper(int[] arr, int low, int high)
+        {
+            if (low < high)
+            {
+                // Partition retirn pivot location to us
+                int pivotIndex = Partition(arr, low, high);
+
+                // Call QuickSort again on the new subarrays based on pivots position
+                QuickSortHelper(arr, low, pivotIndex - 1);
+                QuickSortHelper(arr, pivotIndex + 1, high);
+            }
+        }
+
+        public static int Partition(int[] arr, int low, int high)
+        {
+            int pivot = arr[high]; // setting pivot to be the last value in the array
+            int i = low - 1;
+
+            for(int j = low; j < high; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    Swap(arr, i j);
+                }
+            }
+
+            Swap(arr, ++i, high);
+            return i;
+        }
+
+        public static void Swap(int[] arr, int i, int j)
+        {
+            // swap - could also move this into a helper method
+            temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+
+                // Splits array up and eventually merges it together
         // Calls itself recursively
         public static void MergeSort(int[] arr)
         {
