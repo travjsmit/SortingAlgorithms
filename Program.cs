@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace SortingAlgorithms
 {
@@ -6,62 +7,62 @@ namespace SortingAlgorithms
     {
         static void Main(string[] args)
         {
-            int[] arr1 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
-            int[] arr2 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
-            int[] arr3 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
-            int[] arrSorted1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            int[] arrSorted2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            int[] arrSorted3 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            //int[] arr1 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
+            //int[] arr2 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
+            //int[] arr3 = { 6, 1, 7, 4, 2, 9, 8, 5, 3 };
+            //int[] arrSorted1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            //int[] arrSorted2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            //int[] arrSorted3 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            InsertionSort(arrSorted1);
-            stopwatch.Stop();
-            Console.WriteLine($"Elapsed time for Insertion Sort: {stopwatch.ElapsedTicks}");
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
+            //InsertionSort(arrSorted1);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Elapsed time for Insertion Sort: {stopwatch.ElapsedTicks}");
 
-            stopwatch.Restart();
-            stopwatch.Start();
-            BubbleSort(arrSorted2);
-            stopwatch.Stop();
-            Console.WriteLine($"Elapsed time for Bubble Sort: {stopwatch.ElapsedTicks}");
+            //stopwatch.Restart();
+            //stopwatch.Start();
+            //BubbleSort(arrSorted2);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Elapsed time for Bubble Sort: {stopwatch.ElapsedTicks}");
 
-            stopwatch.Restart();
-            stopwatch.Start();
-            SelectionSort(arrSorted3);
-            stopwatch.Stop();
-            Console.WriteLine($"Elapsed time for Selection Sort: {stopwatch.ElapsedTicks}");
+            //stopwatch.Restart();
+            //stopwatch.Start();
+            //SelectionSort(arrSorted3);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Elapsed time for Selection Sort: {stopwatch.ElapsedTicks}");
 
-            Console.WriteLine("Please select a sorting algorithm");
-            Console.WriteLine("1: Bubble Sort");
-            Console.WriteLine("2: Selection Sort");
-            Console.WriteLine("3: Insertion Sort");
+            //Console.WriteLine("Please select a sorting algorithm");
+            //Console.WriteLine("1: Bubble Sort");
+            //Console.WriteLine("2: Selection Sort");
+            //Console.WriteLine("3: Insertion Sort");
 
-            string? userSelection = Console.ReadLine();
+            //string? userSelection = Console.ReadLine();
 
-            Student student1 = new Student("Melissa", 4.0);
-            Student student2 = new Student("Rich", 3.0);
-            Student student3 = new Student("Adam", 3.8);
+            //Student student1 = new Student("Melissa", 4.0);
+            //Student student2 = new Student("Rich", 3.0);
+            //Student student3 = new Student("Adam", 3.8);
 
-            Student[] students = { student1, student2, student3 };
+            //Student[] students = { student1, student2, student3 };
 
-            switch (userSelection)
-            {
-                case "1":
-                    BubbleSort(students);
-                    // call bubble sort method
-                    break;
-                case "2":
-                    // call selection sort method
-                    break;
-                case "3":
-                    // call insertion sort method
-                    break;
-                default:
-                    // none of the cases matched
-                    break;
-            }
+            //switch (userSelection)
+            //{
+            //    case "1":
+            //        BubbleSort(students);
+            //        // call bubble sort method
+            //        break;
+            //    case "2":
+            //        // call selection sort method
+            //        break;
+            //    case "3":
+            //        // call insertion sort method
+            //        break;
+            //    default:
+            //        // none of the cases matched
+            //        break;
+            //}
 
-            PrintArray(students);
+            //PrintArray(students);
             int[] mergeArray = { 3, 2, 5, 6, 7, 4, 1, 0 };
             MergeSort(mergeArray);
         }
@@ -88,6 +89,38 @@ namespace SortingAlgorithms
 
             MergeSort(leftSubArray);
             MergeSort(rightSubArray);
+            Merge(arr, leftSubArray, rightSubArray);
+        }
+
+        public static void Merge(int[] arr, int[] leftArr, int[] rightArr)
+        {
+            int arrIndex = 0, leftIndex = 0, rightIndex = 0;
+
+            // while leftArr has values and the rightArr has values
+            // we will evaluate which value is lesser - and make assignments
+            while (leftIndex < leftArr.Length && rightIndex < rightArr.Length)
+            {
+                if (leftArr[leftIndex] <= rightArr[rightIndex])
+                {
+                    arr[arrIndex++] = leftArr[leftIndex++];
+                }
+                else
+                {
+                    arr[arrIndex++] = rightArr[rightIndex++];
+                }
+            }
+            
+            // copy remaining elements from left array, if any
+            while (leftIndex < leftArr.Length)
+            {
+                arr[arrIndex++] = leftArr[leftIndex++];
+            }
+
+            // copy remianing elements from right array, if any
+            while (rightIndex < rightArr.Length)
+            {
+                arr[arrIndex++] = rightArr[rightIndex++];
+            }
         }
 
         public static void PrintArray(int[] arr)
@@ -131,7 +164,7 @@ namespace SortingAlgorithms
         public static void BubbleSort(Student[] arrToSort)
         {
             Student temp;
-            for (int i = 0; i < arrToSort.Length; -1; i++) //how many times through unsorted array
+            for (int i = 0; i < arrToSort.Length; - 1; i++) //how many times through unsorted array
             {
                 for (int j = 0; j < arrToSort.Length - 1 - i; j++) //O(n)
                 {
